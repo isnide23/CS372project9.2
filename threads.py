@@ -19,13 +19,11 @@ print("Main Thread Running")
 
 result = [0] * len(ranges)
 
-def runner(name, count):
+def runner(name, thread_num):
     """ Thread running function. """
-
-    for i in range(len(ranges)):
-        print(f"Running: {name} {i}")
-        result[i] = add_range(ranges[i][0],ranges[i][1])
-        time.sleep(0.2)  # seconds
+    print(f"Running: {name} {thread_num}")
+    result[thread_num] = add_range(ranges[thread_num][0],ranges[thread_num][1])
+    time.sleep(0.2)  # seconds
 
 # We need to keep track of them so that we can join() them later. We'll
 # put all the thread references into this array
@@ -39,7 +37,7 @@ for i in range(len(ranges)):
 
     # Set up the thread object. We're going to run the function called
     # "runner" and pass it two arguments: the thread's name and count:
-    t = threading.Thread(target=runner, args=(name, i+3))
+    t = threading.Thread(target=runner, args=(name, i))
 
     # The thread won't start executing until we call `start()`:
     t.start()
